@@ -23,11 +23,15 @@
         function _addslashes($a)    { return(db_qstr($a)); }
         function _stripslashes($a)  { return($a); }
     }
-    set_magic_quotes_runtime(0);
+
+    if(version_compare(PHP_VERSION, '5.3.0', '<')){
+        set_magic_quotes_runtime(0);
+    }
+    
     // If there are any errors in the standard libraries we want to know!
-    // error_reporting(E_ALL); 
+    // error_reporting(E_ALL);
     error_reporting(E_ALL ^ E_NOTICE);
-    ini_set('display_errors',0);
+    ini_set('display_errors', '0');
 
     function esp_where($where = null)
     {
