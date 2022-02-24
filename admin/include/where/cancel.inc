@@ -8,8 +8,11 @@
 // For eGrad2000.com
 // <jflemer@alum.rpi.edu>
 
-	session_register('survey_id');
-	session_register('survey_realm');
+    if ( PHP_VERSION_ID < 50400 ) {
+        session_register('survey_id');
+        session_register('survey_realm');
+    }
+
 	if(ini_get('register_globals')) {
 		$_SESSION['survey_id']    = &$survey_id;
 		$_SESSION['survey_realm'] = &$survey_realm;
