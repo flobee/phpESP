@@ -89,9 +89,11 @@ function survey_results($sid, $precision = 1, $showTotals = 1, $qid = '', $cids 
     if(is_int($cids)) {
         $cids = array($cids);
     }
+
     if(is_string($cids)) {
-        $cids = split(" ",$cids); // turn space seperated list into array
+        $cids = explode(" ",$cids); // turn space seperated list into array
     }
+
 	// set up things differently for cross analysis
 	$cross = !empty($qid);
 	if($cross) {
