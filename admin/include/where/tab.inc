@@ -8,10 +8,12 @@
 // For eGrad2000.com
 // <jflemer@alum.rpi.edu>
 
-	session_register('survey_id');
-	session_register('new_survey');
-	session_register('last_tab');
-	session_register('curr_q');
+if ( PHP_VERSION_ID < 50400 ) {
+    session_register('survey_id');
+    session_register('new_survey');
+    session_register('last_tab');
+    session_register('curr_q');
+}
 
 	/* Use this hack to work around how PHP handles session vars.
 	 * When Register_Globals is on, the value of the global $foo
@@ -103,7 +105,7 @@
 	if ($tab=="") {
 		$tab = $_SESSION['last_tab'];
 	}
-	$tab = strtolower(ereg_replace(' +','_',$tab));
+	$tab = strtolower( preg_replace('{ +}', '_', $tab) );
 
 /* XXX I18n do not translate */
 	if(stristr($tab,'continue')) {
@@ -127,7 +129,7 @@
 
 /* XXX I18n do not translate */
 		
-	if(!ereg('^[A-Za-z0-9_]+$',$tab))	// Valid chars are [A-Za-z0-9_]
+	if( ! preg_match('/^[A-Za-z0-9_]+$/',$tab))	// Valid chars are [A-Za-z0-9_]
 		$tab = 'general';
 	if(!file_exists($ESPCONFIG['include_path'].'/tab/'.$tab.$ESPCONFIG['extension']))
 		$tab = 'general';

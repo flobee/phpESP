@@ -11,8 +11,12 @@
    Returns a string of a SQL fragment to klugde around
    mysql's lack of nested SELECTS. */
 	function array_to_insql($array) {
-		if (count($array))
-			return("IN (".ereg_replace("([^,]+)","\\1",join(",",array_map("_addslashes", $array))).")");
+        if (count($array)) {
+            //$string = ("IN (" . ereg_replace("([^,]+)", "\\1", implode(",", array_map("_addslashes", $array) ) ) . ")");
+            $string = ("IN (" . preg_replace('/([^,]+)/', '\1', implode(",", array_map("_addslashes", $array) ) ) . ")");
+
+            return $string;
+        }
 		return 'IS NULL';
 	}
 /* }}} */

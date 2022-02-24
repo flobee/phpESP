@@ -10,10 +10,10 @@
 	$auth_type = $GLOBALS['ESPCONFIG']['auth_type'];
 	if (empty($auth_type))
 		$auth_type = 'default';
-	if (ereg("manage.php",$ESPCONFIG['ME']) &&
+	if ( preg_match( "/manage.php/", $ESPCONFIG['ME'] ) &&
 	    ($auth_type == 'ldap_both' || $auth_type == 'ldap_des')) {
 		$auth_type = 'ldap';
-	} else if (!ereg("manage.php",$ESPCONFIG['ME']) &&
+	} else if ( ! preg_match( "/manage.php/", $ESPCONFIG['ME']) &&
 		($auth_type == 'ldap_both' || $auth_type == 'ldap_resp')) {
 		$auth_type = 'ldap';
 	} else {

@@ -32,13 +32,17 @@
     function esp_where($where = null)
     {
         $cfg =& $GLOBALS['ESPCONFIG'];
-        if(empty($where))
+        if( empty($where) )
             $where = 'index';
-        $where = strtolower(ereg_replace(' +','_',$where));
-        if(!ereg('^[A-Za-z0-9_]+$',$where))    // Valid chars are [A-Za-z0-9_]
+
+        $where = strtolower( preg_replace('{ +}', '_', trim($where) ) );
+
+        if( ! preg_match('/^[A-Za-z0-9_]+$/i', $where ) )    // Valid chars are [A-Za-z0-9_]
             $where = 'index';
+
         if(!file_exists($cfg['include_path'].'/where/'.$where.$cfg['extension']))
             $where = 'index';
+
         if(!file_exists($cfg['include_path'].'/where/'.$where.$cfg['extension'])) {
             echo('<b>'. _('Unable to open include file. Check INI settings. Aborting.'). '</b>');
             exit;
